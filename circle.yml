@@ -34,7 +34,7 @@ jobs:
             - deploy:
                 name: Deploy Release Branch
                 command: |
-                    if [ "${CIRCLE_BRANCH}" == "release" ]; then
+                    if [ "${CIRCLE_BRANCH}" == "master" ]; then
                       ls -la
                       git log
                     fi

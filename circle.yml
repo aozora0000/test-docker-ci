@@ -25,7 +25,7 @@ jobs:
             - run:
                 name: running test
                 command: |
-                  docker run -d -p 8080:8080 goapp && curl http://localhost:8080
+                  docker run -d --net=host -p 8080:8080 goapp && docker ps && curl http://localhost:8080
 
             - deploy:
                 name: Deploy Release Branch

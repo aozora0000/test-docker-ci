@@ -8,6 +8,8 @@ jobs:
             - checkout
             - setup_remote_docker:
                 version: 17.05.0-ce
+                 reusable: true    # default - false
+                exclusive: true   # default - true
             - run:
                 name: install Docker clinet
                 command: |
@@ -26,7 +28,7 @@ jobs:
                 name: running test
                 command: |
                   docker run -d --net=host -p 8080:8080 goapp
-                  docker run --rm --net=host container:api appropriate/curl \
+                  docker run --rm --net=host appropriate/curl \
                     --retry 10 --retry-delay 1 --retry-connrefused http://localhost:8080/
 
             - deploy:

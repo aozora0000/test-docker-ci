@@ -1,19 +1,36 @@
-machine:
-  services:
-    - docker
+version: 2
+jobs:
+    build:
+        working_directory: /go/src/github.com/ieee0824/circleci-demo
+        docker:
+            - image: golang:latest
+        steps:
+            - checkout
+            - setup_remote_docker
+            - run:
+                name: install Docker clinet
+                command: |
+                    set -x
+                    VER="17.03.0-ce"
+                    curl -L -o /tmp/docker-$VER.tgz https://get.docker.com/builds/Linux/x86_64/docker-$VER.tgz
+                    tar -xz -C /tmp -f /tmp/docker-$VER.tgz
+                    mv /tmp/docker/* /usr/bin
+            - run:
+                name: check docker version
+                command: |
+                    docker version
+            - run:
+                name: build docker image
+                command: |
+                    docker build -t goapp .
+            - test:
+                name: running test
+                command: |
+                  docker run -d -p 8080:8080 goapp && curl http://localhost:8080
 
-dependencies:
-  override:
-    - docker info
-    - docker build -t goapp .
-
-test:
-  override:
-    - docker run -p 8080:8080 goapp
-    - curl http://localhost:8080
-
-deployment:
-  hub:
-    branch: release
-    commands:
-      - yes
+            - deploy:
+                name: Deploy Release Branch
+                command: |
+                    if [ "${CIRCLE_BRANCH}" == "release" ]; then
+                      echo "deploy"
+                    fi

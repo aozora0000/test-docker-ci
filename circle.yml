@@ -7,7 +7,7 @@ jobs:
         steps:
             - checkout
             - setup_remote_docker
-              version: 17.05.0-ce
+                version: 17.05.0-ce
             - run:
                 name: install Docker clinet
                 command: |

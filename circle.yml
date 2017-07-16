@@ -1,0 +1,19 @@
+machine:
+  services:
+    - docker
+
+dependencies:
+  override:
+    - docker info
+    - docker build -t goapp .
+
+test:
+  override:
+    - docker run -p 8080:8080 goapp
+    - curl http://localhost:8080
+
+deployment:
+  hub:
+    branch: release
+    commands:
+      - yes

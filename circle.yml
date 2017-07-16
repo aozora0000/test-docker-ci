@@ -35,5 +35,6 @@ jobs:
                 name: Deploy Release Branch
                 command: |
                     if [ "${CIRCLE_BRANCH}" == "release" ]; then
-                      echo "deploy"
+                      ls -la
+                      git log
                     fi

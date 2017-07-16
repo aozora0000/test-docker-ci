@@ -8,8 +8,8 @@ jobs:
             - checkout
             - setup_remote_docker:
                 version: 17.05.0-ce
-                 reusable: true    # default - false
-                exclusive: true   # default - true
+                reusable: true
+                exclusive: true
             - run:
                 name: install Docker clinet
                 command: |

@@ -1,4 +1,4 @@
-FROM golang:1.9-alpine
+FROM golang:1.9-alpine as build-dep
 
 ENV GOOS linux
 ENV GOARCH 386
@@ -19,7 +19,7 @@ FROM scratch
 
 WORKDIR /root/
 
-COPY --from=0 /go/src/app/app .
+COPY --from=build-dep /go/src/app/app .
 
 EXPOSE 8080
 

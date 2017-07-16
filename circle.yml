@@ -6,7 +6,7 @@ jobs:
             - image: golang:latest
         steps:
             - checkout
-            - setup_remote_docker
+            - setup_remote_docker:
                 version: 17.05.0-ce
             - run:
                 name: install Docker clinet
